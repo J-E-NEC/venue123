@@ -7,16 +7,13 @@ import { GoogleGenAI } from '@google/genai';
 // console.log('Key length:', key.length);
 // console.log('Key starts with:', key.substring(0, 5));
 
-const ai = new GoogleGenAI({ apiKey: key });
-
-export async function handler(event, context) {
+export async function handler(event) {
   // 1. Only allow POST requests
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
   try {
-    // 2. Parse the prompt sent from your frontend
     const { prompt } = JSON.parse(event.body || '{}');
 
     if (!prompt) {
@@ -26,15 +23,14 @@ export async function handler(event, context) {
       };
     }
 
-    // 3. Initialize Gemini SDK using the secret env var
+    // Pass the environment variable directly - no middleman 'key' variable!
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3.6-flash',
+      model: 'gemini-2.5-flash',
       contents: prompt,
     });
 
-    // 4. Return the result safely to your frontend
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'application/json' },
