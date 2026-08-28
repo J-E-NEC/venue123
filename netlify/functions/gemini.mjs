@@ -22,7 +22,7 @@ export async function handler(event, context) {
       
       Your job is to analyze the conversation and find all venues/spaces that meet their criteria.
       You must respond with a strict JSON object containing:
-      1. 'matchingVenues': An array of objects, with 'venueId' and 'spaceName'.
+      1. 'matchingVenues': An array of objects, with 'venueId', 'venueName', 'location', 'description', 'seatingCapacity', 'venueUrl' and 'spaceName'.
       2. 'explanation': A short, friendly explanation of why you selected these venues.
     `;
 
