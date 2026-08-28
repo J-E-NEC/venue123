@@ -6,30 +6,45 @@ import viteLogo from './assets/vite.svg'
 
 // gemini start:
 
+// 1. Create your memory bank globally in your component/script
+let chatHistory = [];
 
+async function searchVenues(userQuery) {
+  // 2. Log the user's new question into the history
+  chatHistory.push({
+    role: 'user',
+    parts: [{ text: userQuery }]
+  });
 
-
-async function askGemini(userPrompt) {
   try {
+    // 3. Send the entire diary to Netlify
     const res = await fetch('/.netlify/functions/gemini', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt: userPrompt }),
+      body: JSON.stringify({ conversationHistory: chatHistory })
     });
-
+    
     const data = await res.json();
     
-    if (data.error) throw new Error(data.error);
+    // 4. Log the AI's response back into the history so it remembers for next time!
+    chatHistory.push({
+      role: 'model',
+      // We stringify the JSON object because Gemini needs it as text memory
+      parts: [{ text: JSON.stringify(data) }] 
+    });
 
-    console.log('Gemini says:', data.text);
-    return data.text;
+    // 5. Update your UI!
+    console.log("Explanation:", data.explanation);
+    console.log("Venues to show:", data.matchingVenues);
+
   } catch (err) {
-    console.error('Frontend Fetch Error:', err);
+    console.error("Oh no, a wobbly!", err);
   }
 }
 
-// Example call
-askGemini('Give me a funny one-liner about JavaScript.');
+// Example flow:
+await searchVenues("I want a 500 person venue in the west midlands");
+// await searchVenues("Actually, can you make sure it's in the city centre?");
 
 // gemini end
 
