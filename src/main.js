@@ -3,7 +3,11 @@ import './style.scss'
 document.querySelector('#app').innerHTML = `
 
 <section id="intro">
-  <h1>Venue AI Test</h1>
+  <h1>
+    Venue AI Test
+    <i class="fa-duotone fa-light fa-microchip-ai" style="--fa-primary-color: #08060d; --fa-secondary-color: #08060d; margin-left: auto;"></i>
+    <i class="fa-duotone fa-light fa-robot" style="--fa-primary-color: #08060d; --fa-secondary-color: #08060d;"></i>
+  </h1>
 </section>
 
 <div class="ticks"></div>
@@ -21,7 +25,9 @@ document.querySelector('#app').innerHTML = `
 
 <section id="question">
   <textarea id="VenueAiQuery" class="lvp-js-venue-ai-query" type="text" autocomplete="off" placeholder="Message" required="required" data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" /></textarea>
-  <button type="submit" id="VenueAiQuerySubmit">GO</button>
+  <button type="submit" id="VenueAiQuerySubmit">
+    <i class="fa-duotone fa-light fa-paper-plane-top" style="--fa-primary-color: #ffffff; --fa-secondary-color: #ffffff;"></i>
+  </button>
 </section>
 
 
